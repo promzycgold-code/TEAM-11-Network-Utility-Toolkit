@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Network Utility Toolkit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Network Utility Toolkit</h1>
+    <p>Check an address, size a subnet, or look up a domain.</p>
+  </header>
+
+  <p id="mock-banner" class="banner" hidden>Showing sample data. The backend is not connected yet.</p>
+
+  <main>
+    <div role="tablist" aria-label="Tools">
+      <button role="tab" id="tab-subnet" aria-controls="panel-subnet" aria-selected="true">Subnet calculator</button>
+      <button role="tab" id="tab-validate" aria-controls="panel-validate" aria-selected="false" tabindex="-1">IP validator</button>
+      <button role="tab" id="tab-dns" aria-controls="panel-dns" aria-selected="false" tabindex="-1">DNS lookup</button>
+    </div>
+
+    <section role="tabpanel" id="panel-subnet" aria-labelledby="tab-subnet">
+      <form id="form-subnet" novalidate>
+        <div class="row">
+          <label class="grow">IP address
+            <input name="ip" placeholder="192.168.1.10" autocomplete="off" spellcheck="false" required>
+          </label>
+          <label class="narrow">Prefix (CIDR)
+            <input name="cidr" placeholder="24" inputmode="numeric" autocomplete="off" required>
+          </label>
+        </div>
+        <button type="submit">Calculate subnet</button>
+      </form>
+      <div id="result-subnet" class="result" aria-live="polite"></div>
+    </section>
+
+    <section role="tabpanel" id="panel-validate" aria-labelledby="tab-validate" hidden>
+      <form id="form-validate" novalidate>
+        <label>IP address
+          <input name="ip" placeholder="192.168.1.10 or 2001:db8::1" autocomplete="off" spellcheck="false" required>
+        </label>
+        <button type="submit">Check address</button>
+      </form>
+      <div id="result-validate" class="result" aria-live="polite"></div>
+    </section>
+
+    <section role="tabpanel" id="panel-dns" aria-labelledby="tab-dns" hidden>
+      <form id="form-dns" novalidate>
+        <div class="row">
+          <label class="grow"><span id="dns-label">Domain name</span>
+            <input id="dns-input" name="domain" placeholder="example.com" autocomplete="off" spellcheck="false" required>
+          </label>
+          <label class="narrow">Record type
+            <select id="dns-type" name="type">
+              <option>A</option><option>AAAA</option><option>MX</option>
+              <option>TXT</option><option>NS</option>
+              <option value="PTR">Reverse (PTR)</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit">Look up</button>
+      </form>
+      <div id="result-dns" class="result" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
