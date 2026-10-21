@@ -27,10 +27,10 @@ def validate_ip(ip_string):
             "status": "error",
             "message": f"Invalid IP address: {e}"
         }
-# --- Test Block ---
-if __name__ == "__main__":
-     print("\n--- TESTING IP VALIDATOR ---")
-     print(validate_ip("192.168.1.1"))
-     print(validate_ip("8.8.8.8"))
-     print(validate_ip("2001:db8::1"))
-     print(validate_ip("999.999.999.999")) # Should return error
+#  --- Test Block ---
+# if __name__ == "__main__":
+#      print("\n--- TESTING IP VALIDATOR ---")
+#      print(validate_ip("192.168.1.1"))
+#      print(validate_ip("8.8.8.8"))
+#      print(validate_ip("2001:db8::1"))
+#      print(validate_ip("999.999.999.999")) # Should return error

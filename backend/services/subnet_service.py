@@ -28,14 +28,9 @@ def calculate_subnet(cidr_string):
             "message": str(e)
         }
 # --- Test Block ---
-if __name__ == "__main__":
-    print("--- TESTING CIDR ---")
-    print(calculate_subnet("192.168.1.0/24"))
-    print(calculate_subnet("10.0.0.0/8"))
-    print(calculate_subnet("invalid/24")) # Should return error
+# if __name__ == "__main__":
+#     print("--- TESTING CIDR ---")
+#     print(calculate_subnet("192.168.1.0/24"))
+#     print(calculate_subnet("10.0.0.0/8"))
+#     print(calculate_subnet("invalid/24")) # Should return error
 
-#     print("\n--- TESTING IP VALIDATOR ---")
-#     print(validate_ip("192.168.1.1"))
-#     print(validate_ip("8.8.8.8"))
-#     print(validate_ip("2001:db8::1"))
-#     print(validate_ip("999.999.999.999")) # Should return error
