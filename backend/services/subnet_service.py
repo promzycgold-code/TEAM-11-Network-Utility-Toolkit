@@ -1,36 +1,49 @@
 import ipaddress
 
 def calculate_subnet(cidr_string):
-    """
-    Takes a string like '192.168.1.0/24' and returns network details.
-    """
+
     try:
         network = ipaddress.ip_network(cidr_string, strict=False)
-        
-        hosts = list(network.hosts())
-        
+
+        total_addresses = network.num_addresses
+
+        if network.version == 4:
+            if network.prefixlen == 32:
+                usable_hosts = 1
+            elif network.prefixlen == 31:
+                usable_hosts = 2
+            else:
+                usable_hosts = total_addresses - 2
+
+            broadcast_address = str(network.broadcast_address)
+
+        else:
+            usable_hosts = total_addresses
+            broadcast_address = None
+
+        if network.version == 4 and network.prefixlen < 31:
+            first_usable = network.network_address + 1
+            last_usable = network.broadcast_address - 1
+        else:
+            first_usable = network.network_address
+            last_usable = network[-1]
+
         return {
             "status": "success",
             "data": {
                 "cidr": str(network),
                 "network_address": str(network.network_address),
-                "broadcast_address": None,
+                "broadcast_address": broadcast_address,
                 "subnet_mask": str(network.netmask),
-                "total_hosts": network.num_addresses,
-                "usable_hosts": len(hosts),
-                "first_usable_ip": str(hosts[0]) if len(hosts) > 0 else "N/A",
-                "last_usable_ip": str(hosts[-1]) if len(hosts) > 0 else "N/A",
+                "total_hosts": total_addresses,
+                "usable_hosts": usable_hosts,
+                "first_usable_ip": str(first_usable),
+                "last_usable_ip": str(last_usable),
             }
         }
-    except ValueError as e:
+
+    except (ValueError, TypeError) as e:
         return {
             "status": "error",
             "message": str(e)
         }
-# --- Test Block ---
-# if __name__ == "__main__":
-#     print("--- TESTING CIDR ---")
-#     print(calculate_subnet("192.168.1.0/24"))
-#     print(calculate_subnet("10.0.0.0/8"))
-#     print(calculate_subnet("invalid/24")) # Should return error
-
