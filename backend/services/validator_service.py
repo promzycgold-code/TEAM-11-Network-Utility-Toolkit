@@ -22,7 +22,7 @@ def validate_ip(ip_string):
             }
         }
 
-    except ValueError as e:
+    except (ValueError, TypeError)as e:
         return {
             "status": "error",
             "message": f"Invalid IP address: {e}"
